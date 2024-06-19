@@ -1,7 +1,6 @@
 package conta.controller;
 
 import java.util.ArrayList;
-
 import conta.model.Conta;
 import conta.repository.ContaRepository;
 
@@ -12,9 +11,9 @@ public class ContaController implements ContaRepository {
 	@Override
 	public void procurarPorNumero(int numero) {
 		var conta = buscarNaCollection(numero);
-		if (conta != null)
-			((Conta) conta).visualizar();
-		else
+		if (conta != null) {
+			conta.visualizar();
+		}else
 			System.out.println("\nA Conta número:  " + numero + " não foi encontrada!");
 
 	}
@@ -61,7 +60,7 @@ public class ContaController implements ContaRepository {
 
 		if (conta != null) {
 
-			if (((Conta) conta).sacar(valor) == true)
+			if (conta.sacar(valor) == true)
 				System.out.println("\nSaque na conta número: " + numero + " foi efetuado com sucesso!");
 		} else
 			System.out.println("\nA conta número: " + numero + "não foi encontrada!");
@@ -72,7 +71,7 @@ public class ContaController implements ContaRepository {
 	public void depositar(int numero, float valor) {
 		var conta = buscarNaCollection(numero);
 		if (conta != null) {
-			((Conta) conta).depositar(valor);
+			conta.depositar(valor);
 			System.out.println("\nDepósito na conta número: " + numero + " foi efetuado com sucesso!");
 		} else
 			System.out.println(
@@ -84,8 +83,8 @@ public class ContaController implements ContaRepository {
 		var contaOrigem = buscarNaCollection(numeroOrigem);
 		var contaDestino = buscarNaCollection(numeroDestino);
 		if (contaOrigem != null && contaDestino != null) {
-			if (((Conta) contaOrigem).sacar(valor) == true) {
-				((Conta) contaDestino).depositar(valor);
+			if ( contaOrigem.sacar(valor) == true) {
+				 contaDestino.depositar(valor);
 				System.out.println("\nA transferencia foi executada com sucesso!");
 			}
 		} else
@@ -97,7 +96,7 @@ public class ContaController implements ContaRepository {
 		return ++numero;
 	}
 
-	public Object buscarNaCollection(int numero2) {
+	public Conta buscarNaCollection(int numero) {
 		for (var conta : listaContas) {
 			if (conta.getNumero() == numero) {
 				return conta;
